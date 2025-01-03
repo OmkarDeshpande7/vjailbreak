@@ -102,7 +102,9 @@ func (r *MigrationTemplateReconciler) Reconcile(ctx context.Context, req ctrl.Re
 		return ctrl.Result{}, err
 	}
 
-	return ctrl.Result{}, nil
+	return ctrl.Result{
+		RequeueAfter: 15 * time.Second,
+	}, nil
 }
 
 //nolint:dupl // Same logic to migrationplan reconciliation, excluding from linting to keep both reconcilers separate
