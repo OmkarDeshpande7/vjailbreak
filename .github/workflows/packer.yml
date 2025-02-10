@@ -35,6 +35,7 @@ jobs:
 
     - name: Bump version
       id: bump_version
+      if: github.event.pull_request.merged == true
       uses: phips28/gh-action-bump-version@master
       with:
         minor-wording:  'add,Adds,new'
@@ -43,9 +44,6 @@ jobs:
                                           # defaulting to a patch bump.
         rc-wording:     'RELEASE,alpha'
         tag-prefix:     'v'
-        skip-tag: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && 'false' || 'true' }}
-        skip-commit: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && 'false' || 'true' }}
-        skip-push: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && 'false' || 'true' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
