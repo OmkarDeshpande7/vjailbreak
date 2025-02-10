@@ -34,21 +34,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    # - name: Bump version
-    #   id: bump_version
-    #   uses: phips28/gh-action-bump-version@master
-    #   with:
-    #     minor-wording:  'add,Adds,new'
-    #     major-wording:  'MAJOR,cut-major'
-    #     patch-wording:  'patch,fixes'     # Providing patch-wording will override commits
-    #                                       # defaulting to a patch bump.
-    #     rc-wording:     'RELEASE,alpha'
-    #     skip-commit: 'true'
-    #     skip-tag: 'true'
-    #     skip-push: 'true'
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
     - name: Set environment variables for images
       run: |
         # Get the branch name, remove 'refs/heads/' from github.ref
@@ -64,7 +49,7 @@ jobs:
           echo "V2V_IMG=${{ env.V2V_IMG }}:$TAG" >> $GITHUB_ENV
           echo "CONTROLLER_IMG=${{ env.CONTROLLER_IMG }}:$TAG" >> $GITHUB_ENV
         elif [[ "$BRANCH_NAME" == "main" ]]; then
-          TAG="main-${{ github.run_number }}"
+          TAG="main.${{ github.run_number }}"
         else
           TAG="${{ github.run_number }}"
         fi
