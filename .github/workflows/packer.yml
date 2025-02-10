@@ -12,19 +12,14 @@ on:
       - created
       - published
   workflow_dispatch:
-    inputs:
-        branch:
-          description: "Branch to run the workflow on"
-          required: true
-          default: "main"
 
 
 env:
   PACKER_VERSION: "latest"
-  QCOW2_IMG: quay.io/platform9/vjailbreak
-  UI_IMG: quay.io/platform9/vjailbreak-ui
-  V2V_IMG: quay.io/platform9/vjailbreak-v2v-helper
-  CONTROLLER_IMG: quay.io/platform9/vjailbreak-controller
+  QCOW2_IMG: ${{ vars.REPO }}/vjailbreak
+  UI_IMG: ${{ vars.REPO }}/vjailbreak-ui
+  V2V_IMG: ${{ vars.REPO }}/vjailbreak-v2v-helper
+  CONTROLLER_IMG: ${{ vars.REPO }}/vjailbreak-controller
 
 jobs:
   build-containers:
