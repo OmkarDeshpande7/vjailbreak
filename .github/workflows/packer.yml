@@ -44,6 +44,8 @@ jobs:
         rc-wording:     'RELEASE,alpha'
         tag-prefix:     'v'
         skip-tag: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && 'false' || 'true' }}
+        skip-commit: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && 'false' || 'true' }}
+        skip-push: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && 'false' || 'true' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
