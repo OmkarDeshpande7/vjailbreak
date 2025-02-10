@@ -9,7 +9,6 @@ on:
       - main
   release:
     types:
-      - created
       - published
   workflow_dispatch:
     inputs:
@@ -43,6 +42,8 @@ jobs:
         patch-wording:  'patch,fixes'     # Providing patch-wording will override commits
                                           # defaulting to a patch bump.
         rc-wording:     'RELEASE,alpha'
+        tag-prefix:     'v'
+        skip-tag: ${{ github.event_name == 'pull_request' && github.event.pull_request.merged == true && 'false' || 'true' }}
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
