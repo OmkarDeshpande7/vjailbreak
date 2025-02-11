@@ -35,7 +35,6 @@ jobs:
 
     - name: Bump version
       id: bump_version
-      if: github.event.pull_request.merged == true
       uses: phips28/gh-action-bump-version@master
       with:
         minor-wording:  'add,Adds,new'
