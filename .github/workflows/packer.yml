@@ -41,7 +41,7 @@ jobs:
         patch-wording:  'patch,fixes'     # Providing patch-wording will override commits
                                           # defaulting to a patch bump.
         rc-wording:     'RELEASE,alpha'
-        skip-tag: 'true'
+        tag-prefix: 'v'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
