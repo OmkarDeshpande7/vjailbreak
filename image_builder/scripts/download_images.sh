@@ -29,7 +29,7 @@ ui="$REGISTRY/$REPO/vjailbreak-ui:$TAG"
 vpwned="$REGISTRY/$REPO/vjailbreak-vpwned:$TAG"
 virtiowin="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/stable-virtio/virtio-win.iso"
 # TODO(suhas): Create a seperate repository for alpine image in quay
-alpine="$REGISTRY/$REPO/vjailbreak:alpine"
+alpine="quay.io/platform9/vjailbreak:alpine"
 
 # Download and export images
 images=(
