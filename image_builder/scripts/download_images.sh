@@ -63,9 +63,9 @@ for img in "${images[@]}"; do
 done
 
 
-ctr images pull --all-platforms quay.io/brancz/kube-rbac-proxy:v0.19.1
+sudo ctr images pull --all-platforms quay.io/brancz/kube-rbac-proxy:v0.19.1
 sleep 10
-ctr images export "image_builder/images/kube-rbac-proxy.tar" quay.io/brancz/kube-rbac-proxy:v0.19.1
+sudo ctr images export "image_builder/images/kube-rbac-proxy.tar" quay.io/brancz/kube-rbac-proxy:v0.19.1
 
 echo "[✔] All images downloaded and exported as tar files."
 
