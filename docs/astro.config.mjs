@@ -80,6 +80,7 @@ export default defineConfig({
 				
 				{
 					label: 'Guide',
+					collapsed: true,
 					autogenerate: { directory: 'guides' },
 					// items: [
 					// 	{ label: 'Scaling', slug: 'guides/How-to/scaling' },
