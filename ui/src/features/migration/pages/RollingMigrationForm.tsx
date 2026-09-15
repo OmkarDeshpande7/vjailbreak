@@ -24,6 +24,7 @@ import SecurityGroupAndServerGroupStep from '../steps/SecurityGroupAndServerGrou
 import SourceDestinationClusterSelection from '../steps/SourceDestinationClusterSelection'
 import useParams from 'src/hooks/useParams'
 import MigrationOptions from '../steps/MigrationOptionsAlt'
+import { ROLLING_FORM_DEFAULTS } from '../constants'
 import TagsAndMetadataSection from '../steps/TagsAndMetadataSection'
 import WarningIcon from '@mui/icons-material/Warning'
 import { useClusterData } from '../hooks/useClusterData'
@@ -143,7 +144,8 @@ export default function RollingMigrationFormDrawer({
   const [vmOSAssignments, setVmOSAssignments] = useState<Record<string, string>>({})
 
   // Migration Options state
-  const { params, getParamsUpdater, updateParams } = useParams<RollingFormParams>({ removeVMwareTools: true })
+  const { params, getParamsUpdater, updateParams } =
+    useParams<RollingFormParams>(ROLLING_FORM_DEFAULTS)
 
   const { data: settingsConfigMap } = useSettingsConfigMapQuery()
   const networkPersistenceSeedRef = useRef(false)

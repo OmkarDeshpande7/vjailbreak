@@ -351,6 +351,22 @@ test.describe('MIG-005 — complete rolling migration', () => {
     await expect(page.getByTestId('host-config-assignment-dialog')).not.toBeVisible()
   })
 
+  test('map resources defaults to vJailbreak Accelerated Copy', async ({ page }) => {
+    await page.goto(ROUTES.clusterConversions)
+    await page.getByRole('button', { name: /start cluster conversion/i }).click()
+    await expect(page.getByTestId('rolling-migration-form-drawer')).toBeVisible()
+
+    await selectClustersAndWaitForVMs(page)
+    await page.getByTestId('section-nav-item-map-resources').click()
+
+    // Same default as the Migration Form (MIG-004) — the two forms share
+    // DEFAULT_STORAGE_COPY_METHOD, so neither starts on Standard Copy.
+    await expect(page.getByRole('radio', { name: /vJailbreak Accelerated Copy/i })).toBeChecked()
+    await expect(page.getByRole('radio', { name: /standard copy/i })).not.toBeChecked()
+    // The Proxy VM picker only exists for Accelerated Copy.
+    await expect(page.getByTestId('proxy-vm-dropdown')).toBeVisible()
+  })
+
   test('rolling migration plan submitted successfully', async ({ page }) => {
     await page.goto(ROUTES.clusterConversions)
     await page.getByRole('button', { name: /start cluster conversion/i }).click()
@@ -379,6 +395,8 @@ test.describe('MIG-005 — complete rolling migration', () => {
     await page.getByTestId('section-nav-item-map-resources').click()
     await mapAllNetworks(page)
     await mapAllStorage(page)
+    // storageCopyMethod defaults to HotAdd — a Ready Proxy VM is required before submit.
+    await selectProxyVM(page, 'proxy-vm-1')
 
     // Submit — rolling form calls onClose() then navigate('/dashboard/cluster-conversions'), no toast
     await page.getByTestId('rolling-migration-form-submit').click()

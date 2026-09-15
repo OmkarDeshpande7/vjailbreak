@@ -1,3 +1,5 @@
+import type { FormValues, RollingFormParams, StorageCopyMethod } from './types'
+
 export enum CUTOVER_TYPES {
   'IMMEDIATE' = '0',
   'ADMIN_INITIATED' = '1',
@@ -40,6 +42,23 @@ export const STORAGE_COPY_METHOD_OPTIONS = [
   { value: 'StorageAcceleratedCopy', label: 'Storage Accelerated Copy' },
   { value: 'normal', label: 'Standard Copy' }
 ] as const
+
+// Both entry points into a migration — the Migration Form and the Cluster Conversion
+// (rolling migration) form — start on the same copy method. Keep this the single source
+// of truth so the two forms cannot drift apart again.
+export const DEFAULT_STORAGE_COPY_METHOD: StorageCopyMethod = 'HotAdd'
+
+// Initial params for the two migration entry points. They are declared side by side so a
+// default added to one is visibly missing from the other.
+export const MIGRATION_FORM_DEFAULTS: Partial<FormValues> = {
+  removeVMwareTools: true,
+  storageCopyMethod: DEFAULT_STORAGE_COPY_METHOD
+}
+
+export const ROLLING_FORM_DEFAULTS: RollingFormParams = {
+  removeVMwareTools: true,
+  storageCopyMethod: DEFAULT_STORAGE_COPY_METHOD
+}
 
 // ---------------------------------------------------------------------------
 // MigrationsTable constants

@@ -53,7 +53,7 @@ import { useApplyTemplatePrefill } from '../hooks/useApplyTemplatePrefill'
 import { useVMwareMachinesQuery } from 'src/hooks/api/useVMwareMachinesQuery'
 import SaveAsTemplateDialog from '../components/templates/SaveAsTemplateDialog'
 import type { SaveAsTemplateInput } from '../api/migration-blueprints/types'
-import { CUTOVER_TYPES } from '../constants'
+import { CUTOVER_TYPES, MIGRATION_FORM_DEFAULTS } from '../constants'
 
 const drawerWidth = 1400
 
@@ -74,8 +74,6 @@ const defaultMigrationOptions = {
   }
 }
 
-const defaultValues: Partial<FormValues> = { removeVMwareTools: true, storageCopyMethod: 'HotAdd' }
-
 export default function MigrationFormDrawer({
   open,
   onClose,
@@ -89,7 +87,7 @@ export default function MigrationFormDrawer({
   const isEditTemplateMode = templateMode === 'edit'
   const isTemplateMode = isCreateTemplateMode || isEditTemplateMode
   const navigate = useNavigate()
-  const { params, getParamsUpdater, updateParams } = useParams<FormValues>(defaultValues)
+  const { params, getParamsUpdater, updateParams } = useParams<FormValues>(MIGRATION_FORM_DEFAULTS)
   const { pcdData, sourceData } = useClusterData()
   const { reportError } = useErrorHandler({ component: 'MigrationForm' })
   const { track } = useAmplitude({ component: 'MigrationForm' })
