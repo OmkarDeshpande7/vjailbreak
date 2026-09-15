@@ -16,7 +16,9 @@ vassessment/specs/
     ├── quickstart.md                # Build and run
     ├── contracts/
     │   ├── rest-api.md              # HTTP contract, per UI page
-    │   └── pre-check-catalog.md     # The check catalog — rule IDs are a public contract
+    │   ├── pre-check-catalog.md     # The check catalog — rule IDs are a public contract
+    │   ├── rvtools-mapping.md       # RVTools tab/column → property mapping, and degradation rules
+    │   └── vcenter-privileges.md    # The minimum read-only role, derived from what the catalog reads
     ├── checklists/
     │   └── requirements.md          # Pre-implementation quality gate
     └── tasks.md                     # Ordered, dependency-aware work breakdown
@@ -30,15 +32,6 @@ vassessment/specs/
 4. **`data-model.md`** / **`contracts/`** — the detail an implementer needs
 5. **`checklists/requirements.md`** — what must be answered first
 6. **`tasks.md`** — the work breakdown
-
-## External sources of truth
-
-| Artifact | Role |
-|---|---|
-| [Product doc (Confluence)](https://platform9.atlassian.net/wiki/spaces/vJailbreak/pages/6262587411) | Product intent, phasing, original check catalog |
-| [API doc (Google Docs)](https://docs.google.com/document/d/1aF91tcAo3Qe6zQ3nb5ttIIckNGc9MoLQdfW9cgy94ZE/edit) | Shared with the UI team; `contracts/rest-api.md` is the in-repo copy of record and wins on conflict |
-| vAssessment redesign canvas | The 4-page UI and the generated scope report |
-| [vJailbreak docs](https://platform9.github.io/vjailbreak/introduction/getting_started/) | Prerequisites and known limitations feeding the check catalog |
 
 ## Status
 

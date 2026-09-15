@@ -1,7 +1,8 @@
 # Contract: vAssessment REST API
 
 **Date**: 2026-09-15
-**Mirrors**: [vAssessment APIs (redesign)](https://docs.google.com/document/d/1aF91tcAo3Qe6zQ3nb5ttIIckNGc9MoLQdfW9cgy94ZE/edit) — that doc is the shared artifact with the UI team; this file is the in-repo copy of record and wins on conflict.
+
+This file is the copy of record for the API contract. Where it disagrees with any externally shared draft, this file wins.
 
 ## Conventions
 
@@ -41,13 +42,13 @@
 | `GET /overview?scan={id}` | One call renders the page. |
 
 ```
-scan     {id, label:"scan #3", capturedAtLabel:"10:42", version, catalogVersion, status}
+scan     {id, label:"scan #N", capturedAtLabel, version, catalogVersion, status}
 
 levels   [ {level:1, key:"basic", name:"Basic", pct:100, donutDashArray,
             status:"complete", statusLabel:"Complete", statusTone:"green",
             source:"vCenter API", description, checkChips:[...],
-            vmsEvaluated:324, vmsTotal:324,
-            excluded:25, excludedLabel:"Excluded (vCLS, templates, vCenter)"} , ... ]
+            vmsEvaluated:N, vmsTotal:N,
+            excluded:N, excludedLabel:"Excluded (vCLS, templates, vCenter)"} , ... ]
           // the selected level's detail panel is the same object — no second call
 
 cards    {compatibleVMs:{value, caption},
@@ -88,8 +89,8 @@ estimates  {totalMigration:{days, label}, baseline:{days, label},
             saved:{days, label}, dataToMove:{tb, label},
             storageAcceleratedPct, agents, caption}
 
-groups     [ {key:"src-1/DC-Mumbai/Prod-A",       // (sourceId, datacenter, cluster)
-              label:"DC-Mumbai / Prod-A", sourceLabel?, // shown only on collision
+groups     [ {key:"src-1/DC-1/Cluster-A",       // (sourceId, datacenter, cluster)
+              label:"DC-1 / Cluster-A", sourceLabel?, // shown only on collision
               vmCount, poweredOnCount, totalGB, caption, vms:[VM]} ]
 
 VM         {id, name, path, badges:["RDM"|"Old OS"|"Encrypted"|...],

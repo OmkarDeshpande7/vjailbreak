@@ -6,7 +6,7 @@
 
 ## Why this document exists
 
-The product doc supplies a baseline of ~41 checks. That baseline was written from engagement experience; it does not know what the migration code actually fails on.
+The product doc supplies a baseline of ~41 checks. That baseline was written from field experience; it does not know what the migration code actually fails on.
 
 This catalog adds what the codebase knows. Every error return, guard clause and OS-specific workaround in `v2v-helper/` and `k8s/migration/` is evidence of a real migration that broke. **Roughly 60 of the checks below were derived that way and are not in the baseline.** Each one is a migration that would otherwise fail at a customer site, often after the entire disk copy has already run.
 

@@ -47,7 +47,8 @@ These land **before** vAssessment's source layer, and each is behaviour-preservi
 ## Phase 3 — User Story 1: assess from a vCenter credential (P1) 🎯 MVP
 
 - [ ] T015 [US1] vCenter source in `vassessment/source/vcenter/`, using `pkg/common/vmware` connect + session cache
-- [ ] T016 [US1] Privilege pre-flight — distinguish unreachable / auth failed / insufficient privilege, naming missing privileges (FR-001)
+- [ ] T016 [US1] Privilege pre-flight per `contracts/vcenter-privileges.md` — distinguish unreachable / auth failed / insufficient privilege, naming the missing privileges and the checks they disable (FR-001)
+- [ ] T016a [US1] Settle the privilege contract empirically: scan with a bare Read-only role, record every `NoPermission`, add the smallest unblocking privilege, repeat on vCenter 6.7/7.0/8.0. Ship `vassessment-role-minimum.json` and `vassessment-role-complete.json` (CHK026)
 - [ ] T017 [US1] Bulk inventory read: `ContainerView` + one `property.Collector.Retrieve` over the required property set (`research.md` C4; NFR-001)
 - [ ] T018 [P] [US1] Map raw `mo.VirtualMachine` to the `VM` entity, including disks, NICs, vTPM, USB, encryption — **all new code, no precedent in repo** (`research.md` R1.6)
 - [ ] T019 [P] [US1] Infrastructure collection: datacenters, clusters, hosts (cores), datastores (type, backing array), networks
@@ -68,8 +69,8 @@ These land **before** vAssessment's source layer, and each is behaviour-preservi
 
 ## Phase 4 — User Story 2: RVTools ingest (P2)
 
-- [ ] T030 [P] [US2] RVTools parser in `vassessment/source/rvtools/` for vInfo, vHost, vDisk, vUSB, vSource
-- [ ] T031 [US2] Column-to-property mapping, with absent columns producing `not_evaluated` — never `pass` (FR-002, FR-016)
+- [ ] T030 [P] [US2] RVTools parser in `vassessment/source/rvtools/` per `contracts/rvtools-mapping.md`; reject an upload missing a required tab (vInfo, vDisk, vHost, vSource)
+- [ ] T031 [US2] Column-to-property mapping per that contract, matching columns by name never by position, with absent columns producing `not_evaluated` — never `pass` (FR-002, FR-016)
 - [ ] T032 [US2] Report parse warnings naming every missing tab/column so the UI can say which checks are unevaluable
 - [ ] T033 [P] [US2] Tests with a real export, a partial export, and a malformed file
 - [ ] T034 [US2] `POST /sources/rvtools`

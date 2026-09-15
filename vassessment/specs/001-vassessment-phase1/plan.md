@@ -27,7 +27,7 @@ It reuses vJailbreak's existing vCenter connectivity where that code is not Kube
 
 ### Decision: embed the UI in the binary
 
-The UI is built to static assets and embedded with `go:embed`. FR-031 requires one artifact; shipping a separate static bundle a user must serve themselves defeats the "download one binary and run it" premise that makes this usable in a customer meeting.
+The UI is built to static assets and embedded with `go:embed`. FR-031 requires one artifact; shipping a separate static bundle a user must serve themselves defeats the "download one binary and run it" premise.
 
 ### Decision: the UI must support a configurable base path from day one
 
@@ -177,6 +177,6 @@ Per `research.md` R2, entirely separate from `packer.yml`:
 
 | Violation | Why needed | Simpler alternative rejected because |
 |---|---|---|
-| Local SQLite state instead of Kubernetes CRs (Principle I) | The product must run before any appliance or cluster exists in the customer environment — that is its entire reason to exist | Requiring k3s would make the tool unusable in the pre-sales and early-engagement scenarios it is built for |
+| Local SQLite state instead of Kubernetes CRs (Principle I) | The product must run before any appliance or cluster exists in the target environment — that is its entire reason to exist | Requiring k3s would make the tool unusable in exactly the pre-appliance scenario it is built for |
 | A sixth Go module's worth of vCenter code | The reuse mandate is satisfied by extracting shared cores into `pkg/common` (C1, C2), not by importing k8s-coupled code | Importing `pkg/common/vmware/credentials.go` as-is is impossible: every function requires a `client.Client` |
 | A second frontend and a second Playwright project | vAssessment ships independently of the appliance; sharing the appliance UI's test project would couple the release trains | Adding vAssessment pages into `ui/` would make independent release impossible |

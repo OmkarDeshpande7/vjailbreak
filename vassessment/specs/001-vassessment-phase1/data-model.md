@@ -33,12 +33,12 @@ Catalog ──1:N──▶ Check ───────────────�
 
 ## Assessment
 
-The top-level container: one engagement, one SQLite file.
+The top-level container: one assessment, one SQLite file.
 
 | Field | Type | Notes |
 |---|---|---|
 | `id` | string | |
-| `name` | string | Customer or engagement name |
+| `name` | string | Operator-supplied label for this assessment |
 | `createdAt` | timestamp | |
 | `catalogVersion` | string | Catalog version in force; recorded per scan as well |
 

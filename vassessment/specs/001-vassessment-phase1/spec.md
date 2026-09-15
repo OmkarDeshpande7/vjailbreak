@@ -3,13 +3,12 @@
 **Feature Branch**: `2386-set-up-the-vassessment-project-folder-structure-and-basic-cli` (foundation), successors `2387`, `2388`
 **Created**: 2026-09-15
 **Status**: Draft
-**Product doc**: [vAssessment — Discovery & Migration Assessment for vJailbreak](https://platform9.atlassian.net/wiki/spaces/vJailbreak/pages/6262587411)
-**API contract**: [vAssessment APIs (redesign)](https://docs.google.com/document/d/1aF91tcAo3Qe6zQ3nb5ttIIckNGc9MoLQdfW9cgy94ZE/edit)
+**API contract**: [`contracts/rest-api.md`](./contracts/rest-api.md)
 **Design**: vAssessment redesign canvas (4 pages) + generated "VMware to PCD Migration Scope" report
 
 ## Overview
 
-vAssessment answers the question every migration engagement opens with — *what do you have, how much of it can vJailbreak migrate, with what risk, and in what order?* — **before** a migration is attempted and **before** a vJailbreak appliance exists in the customer environment.
+vAssessment answers the question every migration project opens with — *what do you have, how much of it can vJailbreak migrate, with what risk, and in what order?* — **before** a migration is attempted and **before** a vJailbreak appliance exists in the target environment.
 
 Today that question is answered with RVTools exports and a hand-maintained spreadsheet. The result is slow, inconsistent between engineers, and silently incomplete: conditions that break a migration halfway through are frequently not discovered until the migration is already running at a customer site.
 
@@ -32,9 +31,9 @@ Basic and Intermediate are both reachable with nothing but a read-only vCenter c
 
 ### User Story 1 — Assess an estate from a read-only vCenter credential (Priority: P1)
 
-A Platform9 SE, on a call with a prospect, is given a read-only vCenter credential. They enter the host, username, and password, click **Connect and Scan**, and within ten minutes have a complete inventory of the estate with every VM classified as compatible, needing remediation, or incompatible — computed on the customer's own VMs, not a generic slide.
+An engineer is given a read-only vCenter credential. They enter the host, username, and password, click **Connect and Scan**, and within ten minutes have a complete inventory of the estate with every VM classified as compatible, needing remediation, or incompatible — computed against the actual VMs in that environment.
 
-**Why this priority**: This is the entire product. Everything else is an alternative input path, a presentation of this result, or a later enrichment of it. If only this story ships, the tool is already useful in a sales conversation and as the opening artifact of an engagement.
+**Why this priority**: This is the entire product. Everything else is an alternative input path, a presentation of this result, or a later enrichment of it. If only this story ships, the tool already produces a usable assessment.
 
 **Independent Test**: Point the binary at a vCenter with a read-only account, run a scan, and confirm a per-VM verdict with supporting evidence for every VM in the estate, with zero mutating API calls issued.
 
@@ -52,7 +51,7 @@ A Platform9 SE, on a call with a prospect, is given a read-only vCenter credenti
 
 A partner engineer cannot get vCenter credentials issued in time, but can produce an RVTools export. They upload the workbook and get the Basic-level assessment immediately, with every check that needs live data clearly reported as *not evaluated* rather than silently passed.
 
-**Why this priority**: Credential issuance is the single most common scheduling blocker in an engagement. This path keeps the assessment moving, and it is how most of today's manual assessments already start. It is second only to the live path because it yields a strictly smaller result.
+**Why this priority**: Credential issuance is the single most common scheduling blocker. This path keeps the assessment moving, and it is how most of today's manual assessments already start. It is second only to the live path because it yields a strictly smaller result.
 
 **Independent Test**: Upload an RVTools `.xlsx` with no vCenter configured; confirm Basic checks evaluate, Intermediate checks report `not_evaluated`, and no check is reported as passing on absent data.
 
@@ -69,7 +68,7 @@ A partner engineer cannot get vCenter credentials issued in time, but can produc
 
 An engineer reviewing the assessment opens Inventory, filters to the VMs needing remediation, and for any VM can see exactly which checks fired, what evidence produced that result, and what to do about it.
 
-**Why this priority**: A verdict without evidence is not actionable and will not be trusted by a customer's infrastructure team, who will and should challenge it. Equal priority with Story 2: both are required for the result to be usable in an engagement.
+**Why this priority**: A verdict without evidence is not actionable and will not be trusted by the infrastructure team reviewing it, who will and should challenge it. Equal priority with Story 2: both are required for the result to be usable.
 
 **Independent Test**: With a completed scan, filter the inventory by each verdict class and open a VM's detail; confirm every check contributing to the verdict is listed with its evidence value.
 
@@ -84,7 +83,7 @@ An engineer reviewing the assessment opens Inventory, filters to the VMs needing
 
 ### User Story 4 — Choose copy methods and see the migration window change (Priority: P3)
 
-A solutions architect planning the engagement changes a VM's copy method from Standard to Storage-Accelerated and immediately sees the estate's estimated migration window and the savings against the cold baseline recalculate.
+An engineer planning the migration changes a VM's copy method from Standard to Storage-Accelerated and immediately sees the estate's estimated migration window and the savings against the cold baseline recalculate.
 
 **Why this priority**: This is what converts an assessment into a plan, and the headline "X days, Y days saved" number is the most quoted output of the whole tool. It is P3 because it is only meaningful once the inventory and verdicts beneath it are correct.
 
@@ -104,7 +103,7 @@ A solutions architect planning the engagement changes a VM's copy method from St
 
 At the end of the session the engineer clicks **Generate Report** and gets a self-contained document they can leave with the customer: scope by region, what was excluded and why, assessment coverage, edge cases with vJailbreak's handling of each, the per-VM plan, and the methodology behind every number.
 
-**Why this priority**: The report is the engagement deliverable and the artifact that outlives the session. P3 because it is a rendering of results that Stories 1–4 must produce first.
+**Why this priority**: The report is the deliverable that outlives the session. P3 because it is a rendering of results that Stories 1–4 must produce first.
 
 **Independent Test**: Generate a report from a completed scan and confirm every figure in it reconciles with what the UI displays for the same scan.
 

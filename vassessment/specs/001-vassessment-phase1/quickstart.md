@@ -25,7 +25,7 @@ make test-vassessment   # test
 vassessment version
 
 # Offline validation — no vCenter contact
-vassessment validate connection --host=vcenter01.corp.local \
+vassessment validate connection --host=vcenter.example.com \
                                 --username=assessment@vsphere.local \
                                 --password=***
 vassessment validate role --granted=granted-role.json --required=required-role.json
@@ -46,12 +46,12 @@ Opens the assessment UI on `http://localhost:8080`. Everything below is doable f
 ### Headless scan **(planned)**
 
 ```bash
-vassessment scan --host vcenter01.corp.local \
+vassessment scan --host vcenter.example.com \
                  --username assessment@vsphere.local \
                  --password-stdin \
-                 --out ./acme.assessment
+                 --out ./estate.assessment
 
-vassessment scan --rvtools ./acme-export.xlsx --out ./acme.assessment
+vassessment scan --rvtools ./rvtools-export.xlsx --out ./estate.assessment
 ```
 
 Credentials are accepted via `--password-stdin` or environment variable, never as a plain argument — process arguments are visible to any user on the host, and these are customer production credentials.
@@ -59,8 +59,8 @@ Credentials are accepted via `--password-stdin` or environment variable, never a
 ### Report **(planned)**
 
 ```bash
-vassessment report --in ./acme.assessment --format pdf --out ./acme-scope.pdf
-vassessment report --in ./acme.assessment --format csv --out ./acme-full.csv
+vassessment report --in ./estate.assessment --format pdf --out ./migration-scope.pdf
+vassessment report --in ./estate.assessment --format csv --out ./migration-scope.csv
 ```
 
 ## Read-only guarantee

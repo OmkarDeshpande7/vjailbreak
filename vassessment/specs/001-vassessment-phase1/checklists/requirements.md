@@ -23,8 +23,8 @@
 
 ## Unresolved design questions
 
-- [ ] CHK012 **What state are the remaining VMs in?** The design shows 120 compatible + 39 remediation VMs + 10 incompatible against an estate of 324. The other ~155 are unaccounted for, and the answer determines what `filter=` must support
-- [ ] CHK013 **Which estate figures are canonical?** The report shows 6.8 days / 14.6 baseline / 7.8 saved; the inventory header shows 2.0 / 2.1 / 0.1. One estimator must own both
+- [ ] CHK012 **What state are the unaccounted-for VMs in?** In the design, the compatible + remediation + incompatible counts do not sum to the estate total, leaving a large remainder unclassified. Either a fourth state exists that the cards do not show, or VMs pending Intermediate are uncounted — the answer determines what `filter=` must support
+- [ ] CHK013 **Which estate figures are canonical?** The design's report header and its inventory header show different totals, baselines and savings for the same scan. One estimator must own both
 - [ ] CHK014 Is the agent count (4) user-adjustable, given it scales the headline number directly?
 - [ ] CHK015 Terminology settled: the API uses `scan`, the design's header chip still says "snapshot"
 - [ ] CHK016 Is `critical workload candidate` (≥2 of: ≥8 vCPU, active memory ≥16 GiB, CPU Ready ≥5%) a check, a badge, or both — and is CPU Ready actually retrievable at scan time without a performance-counter query?
@@ -43,7 +43,9 @@
 
 - [ ] CHK024 The 10-minute / 1,000-VM target has a measurement method and a test estate
 - [ ] CHK025 Read-only enforcement has a test strategy that can fail the build (SC-002)
-- [ ] CHK026 Minimum vCenter privilege set enumerated and verified against every property the catalog reads
+- [ ] CHK026 Minimum vCenter privilege set enumerated (`contracts/vcenter-privileges.md`) — and its ❓ rows settled **empirically** against vCenter 6.7 / 7.0 / 8.0, since per-property privilege requirements are not exhaustively documented
+- [ ] CHK034 Decision on whether to parse `vPartition`, `vTools` and `vNetwork` from RVTools exports. Doing so unlocks the Intermediate level without a live credential (~60 → ~72 checks) but **contradicts the design's Sources-page copy**, which claims free space needs a vCenter connection (`contracts/rvtools-mapping.md`)
+- [ ] CHK035 Oldest RVTools version to support agreed — column names have changed across releases and the mapping must be verified against the oldest export seen in the field
 - [ ] CHK027 Behaviour specified when the role lacks a privilege mid-scan (FR-016)
 - [ ] CHK028 Air-gapped operation confirmed — no telemetry, no font/CDN fetch from the embedded UI (NFR-003)
 - [ ] CHK029 Credential handling reviewed: never persisted, never logged, never passed as a process argument
